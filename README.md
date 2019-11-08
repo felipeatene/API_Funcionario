@@ -48,8 +48,7 @@ GO
 ```
 ### Postman
 - Ultilize a coleção para ver todas as Requisições do Projeto:
-```sql
-```
+https://www.getpostman.com/collections/0ea190cfa6b78b5355bd
 
 ### Ambiente
 - Para configurar o ambiente Acesse o arquivo na raiz do projeto _appsettings.json_ e insira no atributo *Conexao* a string de conexão do seu banco:
