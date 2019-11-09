@@ -8,6 +8,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ApiFuncionarios.Controllers
 {
+
+    public class BodyID
+    {
+        public int Id { get; set; }
+    }
+
+
     [ApiController]
     [Route("[controller]/[action]")]
     public class FuncionariosController : Controller
@@ -43,32 +50,61 @@ namespace ApiFuncionarios.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] FuncionarioDTO func)
         {
-            //FuncionarioDTO
             if (func != null)
             {
                 var funcionario_criado = _funcionarioRepositorio.create(func);
-                //var resultado = new
-                //{
-                //    Status = "200",
-                //    Mensagem = String.Format("O funcionario foi Criado com sucesso com o ID: {0}", funcionario_criado.Id)
-                //};
-                //return Json(resultado);
+                var resultado = new
+                {
+                    Status = "200",
+                    Mensagem = String.Format("O funcionario foi Criado com sucesso com o ID: {0}", funcionario_criado.Id)
+                };
+                return Json(resultado);
             }
             return NotFound();
         }
 
         //  funcionarios/destroy
-        [HttpGet]
-        public string Destroy()
+        [HttpPost]
+        public IActionResult Destroy([FromBody] BodyID func)
         {
-            return "teste felipe";
+            var func_destroy = _funcionarioRepositorio.destroy(func.Id);
+
+            var retorno = new
+            {
+                Status = "200",
+                Mensagem = "O funcionario foi Excluido."
+            };
+
+            if (func_destroy)
+                return Json(retorno);
+
+
+            retorno.Status = "400";
+            retorno.Mensagem = "O funcionario não foi excluido.";
+
+            return Json(retorno);
         }
 
         //  funcionarios/update
-        [HttpGet]
-        public string Update()
+        [HttpPost]
+        public IActionResult Update([FromBody] FuncionarioDTO func)
         {
-            return "teste felipe";
+            var resultado = _funcionarioRepositorio.update(func);
+
+            var retorno = new
+            {
+                Status = "200",
+                Mensagem = "O funcionario foi atualizado."
+            };
+
+            if (func_destroy)
+                return Json(retorno);
+
+
+            retorno.Status = "400";
+            retorno.Mensagem = "O funcionario não foi atualizado.";
+
+            return Json(retorno);
         }
 
     }

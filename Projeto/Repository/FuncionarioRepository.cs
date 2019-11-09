@@ -60,13 +60,17 @@ namespace ApiFuncionarios.Repository
             if (func != null)
             {
                 _funcionarios.Funcionarios.Remove(func);
+                _funcionarios.SaveChanges();
                 return true;
             }
             return false;
         }
         public Funcionario update(Funcionario funcionario)
         {
-            throw new NotImplementedException();
+            _funcionarios.Funcionarios.Update(funcionario);
+            _funcionarios.SaveChanges();
+
+            return _funcionarios.Funcionarios.Find(funcionario);
         }
     }
 }
